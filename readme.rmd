@@ -1,0 +1,61 @@
+````rmd
+---
+title: "Instrucciones para ejecutar el proyecto"
+output: html_document
+---
+
+# A. Generación de Imágenes
+
+(dentro de la carpeta `/Generacion de Imágenes`)
+
+1. Obtén un dataset de imágenes del entorno real donde quieres inferenciar, por ejemplo, un supermercado.  
+2. Coloca estas imágenes dentro de `dataset/backgrounds`.  
+3. Encuentra un checkpoint de **SAM** y colócalo en esta carpeta.  
+4. En `home-dataset`, añade las carpetas `labels` e `images`, y coloca las imágenes y etiquetas del objeto a detectar (estas imágenes serán del entorno controlado).  
+5. Ejecuta `sythetic generator` (deberás pararlo manualmente, ya que este algoritmo genera una gran cantidad de imágenes).  
+   - Se generará una carpeta `synthetic` dentro de `/dataset`, que contendrá `images` y `labels`.
+   - Separa estos archivos en carpetas `train` y `valid`.  
+6. Crea un archivo `.yaml` con la estructura de carpetas que quieras utilizar y entrena YOLO con el siguiente código:
+
+```python
+model.train(
+    data=dataset_yaml,
+    epochs=10,
+    batch=75,
+    lr0=0.002,
+    optimizer='SGD',
+    freeze=5,
+    single_cls=True,
+)
+````
+
+> ⚠️ El parámetro más importante es `single_cls`, ya que solo se le enseñará un objeto cada vez.
+
+# B. Optimización
+
+(dentro de la carpeta `/Optimización`)
+
+0. Necesitarás preparar un entorno compatible con todas las herramientas necesarias.
+
+   * En mi caso, el último entorno funcional fue el entorno Conda incluido en la carpeta: `environment.yml`.
+1. Añade tu checkpoint de YOLO ya entrenado.
+2. Ejecuta `conversor.py`, pasándole como parámetro el nombre de tu checkpoint.
+3. Se generarán varios archivos:
+
+   * `.onnx`: versión exportada de tu modelo en formato ONNX.
+   * `_opt.onnx`: versión optimizada.
+   * `.tflite`: versión optimizada en formato TFLite.
+4. **Tal y como está actualmente el pipeline, la única que te interesa es `_opt.onnx`.**
+
+# C. Aplicación
+
+(dentro de la carpeta `/Aplicación AndroidStudio`)
+
+1. Con tu `_opt.onnx`, ve a la carpeta:
+   `DemoYoloApp/app/src/main/assets`
+   Inserta el modelo como `modelo.onnx`.
+
+2. Si deseas usar el test de inferencia, añade una imagen del conjunto de entrenamiento con el nombre:
+   `test_image.jpg`.
+
+```

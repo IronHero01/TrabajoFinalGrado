@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- PreviewView para la vista previa de la cámara -->
+    <androidx.camera.view.PreviewView
+        android:id="@+id/cameraPreview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Botón ENCENDER -->
+    <Button
+        android:id="@+id/btnEncender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ENCENDER"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Botón APAGAR -->
+    <Button
+        android:id="@+id/btnApagar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="APAGAR"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone" />
+
+    <!-- Botón TEST: prueba inferencia con imagen en assets -->
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEST"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <!-- ToggleButton para alternar entre modo objeto / modo distancia -->
+    <ToggleButton
+        android:id="@+id/toggleModo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Modo Objeto"
+        android:textOn="Modo Distancia"
+        android:layout_below="@id/btnTest"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
+
+</RelativeLayout>
