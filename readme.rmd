@@ -1,9 +1,3 @@
-````rmd
----
-title: "Instrucciones para ejecutar el proyecto"
-output: html_document
----
-
 # A. Generación de Imágenes
 
 (dentro de la carpeta `/Generacion de Imágenes`)
@@ -57,5 +51,3 @@ model.train(
 
 2. Si deseas usar el test de inferencia, añade una imagen del conjunto de entrenamiento con el nombre:
    `test_image.jpg`.
-
-```
